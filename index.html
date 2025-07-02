@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Redirect Portal</title>
+</head>
+<body>
+  <h2>Press the button to continue</h2>
+  <button onclick="go()">Continue</button>
+
+  <script>
+    // Define your lookup table
+    const urlMap = {
+      "gpu42": "https://example.com/products/gpu42",
+      "usbmod": "https://example.com/modules/usbmod",
+      "designkit": "https://example.com/assets/designkit"
+      // ... up to 200 entries
+    };
+
+    // Fetch code from the URL
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+
+    function go() {
+      if (urlMap[code]) {
+        window.location.href = urlMap[code];
+      } else {
+        alert("Invalid or missing code in the link.");
+      }
+    }
+  </script>
+</body>
+</html>
