@@ -10,7 +10,7 @@
   <script>
     // Define your lookup table
     const urlMap = {
-      "PlantWallArtGreen": "https://amzn.to/44f2J04",
+      "plantwallartgreen": "https://amzn.to/44f2J04",
       "usbmod": "https://example.com/modules/usbmod",
       "designkit": "https://example.com/assets/designkit"
       // ... up to 200 entries
@@ -18,7 +18,7 @@
 
     // Fetch code from the URL
     const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
+    const code = params.get("code")?.toLowerCase();
 
     function go() {
       if (urlMap[code]) {
