@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Link Generator</title>
+</head>
+<body>
+  <h2>Add a New Redirect</h2>
+  <form onsubmit="addLink(); return false;">
+    <label>Password: <input type="password" id="password"></label><br>
+    <label>Code: <input type="text" id="code"></label><br>
+    <label>URL: <input type="text" id="url"></label><br>
+    <button type="submit">Add Link</button>
+  </form>
+
+  <script>
+    const correctPassword = "yourSecurePassword"; // Change this!
+
+    function addLink() {
+      const pw = document.getElementById("password").value;
+      const code = document.getElementById("code").value.trim().toLowerCase();
+      const url = document.getElementById("url").value.trim();
+
+      if (pw !== correctPassword) {
+        alert("Incorrect password.");
+        return;
+      }
+
+      if (!code || !url) {
+        alert("Both fields are required.");
+        return;
+      }
+
+      fetch('list.txt')
+        .then(response => response.text())
+        .then(text => {
+          const lines = text.split('\n');
+          const exists = lines.some(line => line.split(',')[0].trim().toLowerCase() === code);
+
+          if (exists) {
+            alert("Code already exists.");
+          } else {
+            const updated = [...lines, `${code},${url}`].join('\n');
+            downloadFile(updated, 'list.txt');
+          }
+        });
+    }
+
+    function downloadFile(content, filename) {
+      const blob = new Blob([content], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+    }
+  </script>
+</body>
+</html>
