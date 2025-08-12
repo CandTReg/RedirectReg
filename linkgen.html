@@ -12,8 +12,11 @@
     <button type="submit">Add Link</button>
   </form>
 
+  <div id="result" style="margin-top:20px;"></div>
+
   <script>
-    const correctPassword = "That wasnt very hard"; // Change this!
+    const correctPassword = "yourSecurePassword"; // Change this!
+    const redirectBase = "https://github.com/CandTReg/RedirectReg/index.html?code="; // Update this!
 
     function addLink() {
       const pw = document.getElementById("password").value;
@@ -41,6 +44,12 @@
           } else {
             const updated = [...lines, `${code},${url}`].join('\n');
             downloadFile(updated, 'list.txt');
+
+            const preview = `${redirectBase}${encodeURIComponent(code)}`;
+            document.getElementById("result").innerHTML = `
+              ✅ Link added!<br>
+              🔗 <a href="${preview}" target="_blank">${preview}</a>
+            `;
           }
         });
     }
