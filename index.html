@@ -8,15 +8,18 @@
   <button onclick="go()">Continue</button>
 
   <script>
-    // Define your lookup table
-    const urlMap = {
-      "plantwallartgreen": "https://amzn.to/44f2J04",
-      "tfalpans": "https://amzn.to/40VySHR",
-      "designkit": "https://example.com/assets/designkit"
-      // ... up to 200 entries
-    };
+    let urlMap = {};
 
-    // Fetch code from the URL
+    // Load list.txt dynamically
+    fetch('list.txt')
+      .then(response => response.text())
+      .then(text => {
+        text.split('\n').forEach(line => {
+          const [key, value] = line.split(',');
+          if (key && value) urlMap[key.trim().toLowerCase()] = value.trim();
+        });
+      });
+
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code")?.toLowerCase();
 
